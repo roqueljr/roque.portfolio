@@ -9,25 +9,7 @@ export default function ProgrammerPortfolio() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      // Get all sections
-      const sections = ['about', 'skills', 'experience', 'projects', 'education', 'certificates', 'contact'];
-      
-      // Find which section is currently in view
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // Check if section is in the middle of the viewport
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
     };
-
-    handleScroll(); // Check on mount
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -35,14 +17,7 @@ export default function ProgrammerPortfolio() {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80; // Navigation height offset
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
       setIsMenuOpen(false);
     }
@@ -50,15 +25,21 @@ export default function ProgrammerPortfolio() {
 
   const projects = [
     {
-      title: "PEFCarbon Sink Database",
-      description: "Database management system for tracking carbon sink data.",
-      tech: ["PHP", "Laravel", "MySQL", "HTML/CSS"],
+      title: "E-Commerce Platform",
+      description: "Full-stack web application with payment integration and inventory management",
+      tech: ["React", "Node.js", "MongoDB", "Stripe"],
       link: "#"
     },
     {
-      title: "Tigo: Tricycle Ride - Booking Mobile Application",
-      description: "Online booking platform for tricycle rides with real-time tracking.",
-      tech: ["Kotlin", "Firebase", "Google Cloud", "PHP", "MySQL", "HTML/CSS"],
+      title: "Task Management API",
+      description: "RESTful API with JWT authentication and real-time updates",
+      tech: ["Express", "PostgreSQL", "Socket.io", "Docker"],
+      link: "#"
+    },
+    {
+      title: "Data Visualization Dashboard",
+      description: "Interactive analytics dashboard with real-time data processing",
+      tech: ["Vue.js", "D3.js", "Python", "FastAPI"],
       link: "#"
     }
   ];
@@ -106,14 +87,9 @@ export default function ProgrammerPortfolio() {
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
-                className={`relative hover:text-emerald-400 transition-all duration-300 ${
-                  activeSection === section ? 'text-emerald-400' : 'text-slate-300'
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === section ? 'text-emerald-400' : ''}`}
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
-                {activeSection === section && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 animate-pulse"></span>
-                )}
               </button>
             ))}
           </div>
@@ -152,7 +128,7 @@ export default function ProgrammerPortfolio() {
             $ whoami
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-            Full Stack Developer
+            Web Developer
           </h1>
           <p className="text-xl md:text-2xl text-slate-400 mb-8">
             Building scalable web applications with clean code and modern technologies
@@ -244,10 +220,26 @@ export default function ProgrammerPortfolio() {
             <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Technical Support Specialist</h3>
-                  <p className="text-slate-300">Company Name</p>
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Junior Software Developer</h3>
+                  <p className="text-slate-300">Philippine Eagle Foundation</p>
                 </div>
-                <span className="text-slate-400 text-sm mt-2 md:mt-0">2022 - Present</span>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">July-December 2025</span>
+              </div>
+              <ul className="list-disc list-inside space-y-2 text-slate-300">
+                <li>Assisted in developing and maintaining database web applications</li>
+                <li>Provided first-line technical support to clients</li>
+                <li>Performed system diagnostics and troubleshooting</li>
+                <li>Created user guides and technical documentation</li>
+              </ul>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Technical Support Specialist</h3>
+                  <p className="text-slate-300">Decoart Marketing Incorporated - Citihardware</p>
+                </div>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">April 2024 - July 2025</span>
               </div>
               <ul className="list-disc list-inside space-y-2 text-slate-300">
                 <li>Provided technical support for web applications and software products</li>
@@ -255,22 +247,6 @@ export default function ProgrammerPortfolio() {
                 <li>Documented technical issues and created knowledge base articles</li>
                 <li>Collaborated with development team to identify and fix bugs</li>
                 <li>Maintained 95% customer satisfaction rating</li>
-              </ul>
-            </div>
-
-            <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Junior Developer / Support</h3>
-                  <p className="text-slate-300">Previous Company</p>
-                </div>
-                <span className="text-slate-400 text-sm mt-2 md:mt-0">2021 - 2022</span>
-              </div>
-              <ul className="list-disc list-inside space-y-2 text-slate-300">
-                <li>Assisted in developing and maintaining web applications</li>
-                <li>Provided first-line technical support to clients</li>
-                <li>Performed system diagnostics and troubleshooting</li>
-                <li>Created user guides and technical documentation</li>
               </ul>
             </div>
           </div>
@@ -320,16 +296,15 @@ export default function ProgrammerPortfolio() {
             <div className="flex items-start gap-4 mb-6">
               <Code2 className="w-6 h-6 text-emerald-400 mt-1" />
               <div>
-                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Computer Science</h3>
-                <p className="text-emerald-400 mb-2">University Name</p>
-                <p className="text-slate-400">2018 - 2022</p>
+                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Information Technology - Major in Inforamtion Security</h3>
+                <p className="text-emerald-400 mb-2">University of Southeastern Philippines</p>
+                <p className="text-slate-400">2019 - 2023</p>
               </div>
             </div>
-            <ul className="list-disc list-inside space-y-2 text-slate-300 ml-10">
-              <li>Graduated with Honors</li>
+            {/* <ul className="list-disc list-inside space-y-2 text-slate-300 ml-10">
               <li>Focus on Software Engineering and Web Development</li>
               <li>Relevant coursework: Data Structures, Algorithms, Database Systems, Web Technologies</li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </section>
@@ -355,10 +330,10 @@ export default function ProgrammerPortfolio() {
                 <h3 className="text-lg font-bold text-emerald-400 mb-2">{cert.title}</h3>
                 <p className="text-slate-300 font-semibold mb-2">{cert.issuer}</p>
                 <p className="text-sm text-slate-400 mb-3">{cert.description}</p>
-                <div className="flex items-center gap-2 text-xs text-slate-500">
+                {/* <div className="flex items-center gap-2 text-xs text-slate-500">
                   <span className="font-mono">ID:</span>
                   <span className="font-mono">{cert.credentialId}</span>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
@@ -403,17 +378,12 @@ export default function ProgrammerPortfolio() {
           </div>
         </div>
       </section>
-      <br />
-      <br />
-      <br />
-      <br />
-
 
       {/* Footer */}
       <footer className="py-8 px-6 border-t border-slate-800">
         <div className="max-w-4xl mx-auto text-center text-slate-400">
           <p className="mb-2">$ exit</p>
-          <p>&copy; 2024 Your Name. Built with React & Tailwind CSS</p>
+          <p>&copy; 2025 Your Name. Built with React & Tailwind CSS</p>
         </div>
       </footer>
     </div>
