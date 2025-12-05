@@ -244,10 +244,26 @@ export default function ProgrammerPortfolio() {
             <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Technical Support Specialist</h3>
-                  <p className="text-slate-300">Company Name</p>
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Junior Software Developer</h3>
+                  <p className="text-slate-300">Philippine Eagle Foundation</p>
                 </div>
-                <span className="text-slate-400 text-sm mt-2 md:mt-0">2022 - Present</span>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">July-December 2025</span>
+              </div>
+              <ul className="list-disc list-inside space-y-2 text-slate-300">
+                <li>Assisted in developing and maintaining database web applications</li>
+                <li>Provided first-line technical support to clients</li>
+                <li>Performed system diagnostics and troubleshooting</li>
+                <li>Created user guides and technical documentation</li>
+              </ul>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Technical Support Specialist</h3>
+                  <p className="text-slate-300">Decoart Marketing Incorporated - Citihardware</p>
+                </div>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">April 2024 - July 2025</span>
               </div>
               <ul className="list-disc list-inside space-y-2 text-slate-300">
                 <li>Provided technical support for web applications and software products</li>
@@ -255,22 +271,6 @@ export default function ProgrammerPortfolio() {
                 <li>Documented technical issues and created knowledge base articles</li>
                 <li>Collaborated with development team to identify and fix bugs</li>
                 <li>Maintained 95% customer satisfaction rating</li>
-              </ul>
-            </div>
-
-            <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Junior Developer / Support</h3>
-                  <p className="text-slate-300">Previous Company</p>
-                </div>
-                <span className="text-slate-400 text-sm mt-2 md:mt-0">2021 - 2022</span>
-              </div>
-              <ul className="list-disc list-inside space-y-2 text-slate-300">
-                <li>Assisted in developing and maintaining web applications</li>
-                <li>Provided first-line technical support to clients</li>
-                <li>Performed system diagnostics and troubleshooting</li>
-                <li>Created user guides and technical documentation</li>
               </ul>
             </div>
           </div>
@@ -320,16 +320,16 @@ export default function ProgrammerPortfolio() {
             <div className="flex items-start gap-4 mb-6">
               <Code2 className="w-6 h-6 text-emerald-400 mt-1" />
               <div>
-                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Computer Science</h3>
-                <p className="text-emerald-400 mb-2">University Name</p>
-                <p className="text-slate-400">2018 - 2022</p>
+                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Information Technology - Major in Inforamtion Security</h3>
+                <p className="text-emerald-400 mb-2">University of Southeastern Philippines</p>
+                <p className="text-slate-400">2019 - 2023</p>
               </div>
             </div>
-            <ul className="list-disc list-inside space-y-2 text-slate-300 ml-10">
+            {/* <ul className="list-disc list-inside space-y-2 text-slate-300 ml-10">
               <li>Graduated with Honors</li>
               <li>Focus on Software Engineering and Web Development</li>
               <li>Relevant coursework: Data Structures, Algorithms, Database Systems, Web Technologies</li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </section>
@@ -355,10 +355,10 @@ export default function ProgrammerPortfolio() {
                 <h3 className="text-lg font-bold text-emerald-400 mb-2">{cert.title}</h3>
                 <p className="text-slate-300 font-semibold mb-2">{cert.issuer}</p>
                 <p className="text-sm text-slate-400 mb-3">{cert.description}</p>
-                <div className="flex items-center gap-2 text-xs text-slate-500">
+                {/* <div className="flex items-center gap-2 text-xs text-slate-500">
                   <span className="font-mono">ID:</span>
                   <span className="font-mono">{cert.credentialId}</span>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
@@ -413,7 +413,7 @@ export default function ProgrammerPortfolio() {
       <footer className="py-8 px-6 border-t border-slate-800">
         <div className="max-w-4xl mx-auto text-center text-slate-400">
           <p className="mb-2">$ exit</p>
-          <p>&copy; 2024 Your Name. Built with React & Tailwind CSS</p>
+          <p>&copy; 2025 Roque Longgakit. Built with React & Tailwind CSS</p>
         </div>
       </footer>
     </div>
