@@ -66,7 +66,7 @@ export default function ProgrammerPortfolio() {
   const skills = [
     "JavaScript", "React", "Node.js", 
     "SQL", "Git", "PHP", "HTML/CSS",
-    "TypeScript"
+    "TypeScript", "Laravel"
   ];
 
   const supportSkills = [
@@ -291,7 +291,7 @@ export default function ProgrammerPortfolio() {
               >
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-bold text-emerald-400">{project.title}</h3>
-                  <ExternalLink className="w-5 h-5 text-slate-400 hover:text-emerald-400 cursor-pointer" />
+                  {/* <ExternalLink className="w-5 h-5 text-slate-400 hover:text-emerald-400 cursor-pointer" /> */}
                 </div>
                 <p className="text-slate-300 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
