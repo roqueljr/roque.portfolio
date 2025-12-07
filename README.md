@@ -198,8 +198,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - 📧 Email: rja.longgakit@gmail.com
 - 💼 LinkedIn: [linkedin.com/in/roqueljr](https://linkedin.com/in/roqueljr)
-- 🐙 GitHub: [github.com/roqueljr]([https://github.com/yourusername](https://github.com/roqueljr))
-- 🌐 Portfolio: [roque-portfolio.onrender.com]([https://your-portfolio-url.com](https://roque-portfolio.onrender.com/)
+- 🐙 GitHub: [github.com/roqueljr](https://github.com/roqueljr)
+- 🌐 Portfolio: [roque-portfolio.onrender.com](https://roque-portfolio.onrender.com/)
 
 ---
 
