@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Code2, Terminal, Mail, Github, Linkedin, ExternalLink, Menu, X } from 'lucide-react';
+import { Code2, Terminal, Mail, Github, Linkedin, ExternalLink, Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ProgrammerPortfolio() {
   const [activeSection, setActiveSection] = useState('about');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +34,20 @@ export default function ProgrammerPortfolio() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Keyboard navigation for modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedProject) {
+        if (e.key === 'Escape') closeProjectModal();
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'ArrowRight') nextImage();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject, currentImageIndex]);
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -48,17 +64,60 @@ export default function ProgrammerPortfolio() {
     }
   };
 
+  const openProjectModal = (project) => {
+    setSelectedProject(project);
+    setCurrentImageIndex(0);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const closeProjectModal = () => {
+    setSelectedProject(null);
+    setCurrentImageIndex(0);
+    document.body.style.overflow = 'unset';
+  };
+
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => 
+        prev === selectedProject.images.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => 
+        prev === 0 ? selectedProject.images.length - 1 : prev - 1
+      );
+    }
+  };
+
   const projects = [
     {
       title: "PEFCarbon Sink Database",
       description: "Database management system for tracking carbon sink data.",
       tech: ["PHP", "Laravel", "MySQL", "HTML/CSS"],
+      images: [
+        "/projects/pef-carbon-sink/image1.png",
+        "/projects/pef-carbon-sink/image2.png",
+        "/projects/pef-carbon-sink/image3.png"
+      ],
       link: "#"
     },
     {
-      title: "Tigo: Tricycle Ride - Booking Mobile Application",
+      title: "Trigo: Tricycle Ride - Booking Mobile Application (CAPSTONE)",
       description: "Online booking platform for tricycle rides with real-time tracking.",
       tech: ["Kotlin", "Firebase", "Google Cloud", "PHP", "MySQL", "HTML/CSS"],
+      images: [
+        "/projects/trigo/Picture0.png",
+        "/projects/trigo/Picture1.png",
+        "/projects/trigo/Picture2.png",
+        "/projects/trigo/Picture3.jpg",
+        "/projects/trigo/Picture4.jpg",
+        "/projects/trigo/Picture5.jpg",
+        "/projects/trigo/Picture6.jpg",
+        "/projects/trigo/Picture7.jpg",
+      ],
       link: "#"
     }
   ];
@@ -148,6 +207,25 @@ export default function ProgrammerPortfolio() {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20">
         <div className="max-w-4xl text-center">
+          {/* Profile Picture */}
+          <div className="mb-8 flex justify-center">
+            <div className="relative group">
+              {/* Animated border effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+              
+              {/* Profile Image */}
+              <div className="relative">
+                <img 
+                  src="/profile-hero.png" 
+                  alt="Roque Longgakit - Profile"
+                  className="relative w-48 h-48 rounded-full object-cover border-4 border-slate-900 shadow-2xl"
+                />
+                {/* Online status indicator */}
+                <div className="absolute bottom-4 right-4 w-6 h-6 bg-emerald-400 rounded-full border-4 border-slate-900 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
           <div className="mb-6 text-emerald-400 text-sm animate-pulse">
             $ whoami
           </div>
@@ -181,16 +259,33 @@ export default function ProgrammerPortfolio() {
             <span className="text-slate-500">//</span> About Me
           </h2>
           <div className="bg-slate-900 border border-slate-800 rounded-lg p-8">
-            <p className="text-lg text-slate-300 leading-relaxed mb-4">
-              I'm an enthusiastic coder that enjoys creating sophisticated solutions for 
-              challenging issues. I have a solid background in information technology 
-              and practical development experience, and my area of expertise 
-              is creating scalable, reliable apps.
-            </p>
-            <p className="text-lg text-slate-300 leading-relaxed">
-              I like to explore new technologies, contribute to open-source projects, and 
-              share my expertise with the developer community when I'm not developing.
-            </p>
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {/* Profile Image for About Section */}
+              <div className="flex-shrink-0 mx-auto md:mx-0">
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-lg blur opacity-25"></div>
+                  <img 
+                    src="profile-about.jpg" 
+                    alt="Roque Longgakit"
+                    className="relative w-32 h-32 rounded-lg object-cover border-2 border-slate-800"
+                  />
+                </div>
+              </div>
+              
+              {/* About Text */}
+              <div className="flex-1">
+                <p className="text-lg text-slate-300 leading-relaxed mb-4">
+                  I'm an enthusiastic coder that enjoys creating sophisticated solutions for 
+                  challenging issues. I have a solid background in information technology 
+                  and practical development experience, and my area of expertise 
+                  is creating scalable, reliable apps.
+                </p>
+                <p className="text-lg text-slate-300 leading-relaxed">
+                  I like to explore new technologies, contribute to open-source projects, and 
+                  share my expertise with the developer community when I'm not developing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -263,7 +358,7 @@ export default function ProgrammerPortfolio() {
                   <h3 className="text-xl font-bold text-emerald-400 mb-2">Technical Support Specialist</h3>
                   <p className="text-slate-300">Decoart Marketing Incorporated - Citihardware</p>
                 </div>
-                <span className="text-slate-400 text-sm mt-2 md:mt-0">April 2024 - July 2025</span>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">April 2024 - July 2024</span>
               </div>
               <ul className="list-disc list-inside space-y-2 text-slate-300">
                 <li>Provided technical support for web applications and software products</li>
@@ -271,6 +366,20 @@ export default function ProgrammerPortfolio() {
                 <li>Documented technical issues and created knowledge base articles</li>
                 <li>Collaborated with development team to identify and fix bugs</li>
                 <li>Maintained 95% customer satisfaction rating</li>
+              </ul>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Visym Collector Dataset AI - Freelance</h3>
+                  <p className="text-slate-300">US</p>
+                </div>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">August 2021 - Nov 2023</span>
+              </div>
+              <ul className="list-disc list-inside space-y-2 text-slate-300">
+                <li>On-demand Datasets for Visual AI</li>
+                <li>Visym Labs mission is to develop a global platform consented and privacy preserving computer vision</li>
               </ul>
             </div>
           </div>
@@ -283,26 +392,54 @@ export default function ProgrammerPortfolio() {
           <h2 className="text-3xl font-bold mb-8 text-emerald-400">
             <span className="text-slate-500">//</span> Featured Projects
           </h2>
-          <div className="grid gap-6">
+          <div className="grid gap-8">
             {projects.map((project, index) => (
               <div 
                 key={index}
-                className="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-emerald-400 transition-all hover:shadow-lg hover:shadow-emerald-400/10"
+                className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden hover:border-emerald-400 transition-all hover:shadow-lg hover:shadow-emerald-400/10 group"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-emerald-400">{project.title}</h3>
-                  {/* <ExternalLink className="w-5 h-5 text-slate-400 hover:text-emerald-400 cursor-pointer" /> */}
+                {/* Project Image */}
+                <div className="relative overflow-hidden cursor-pointer" onClick={() => openProjectModal(project)}>
+                  <img 
+                    src={project.images[0]} 
+                    alt={project.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                  
+                  {/* View Project Button (appears on hover) */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg flex items-center gap-2 transform -translate-y-4 group-hover:translate-y-0 transition-transform">
+                      <ExternalLink className="w-5 h-5" />
+                      View Screenshots ({project.images.length})
+                    </button>
+                  </div>
+
+                  {/* Image count indicator */}
+                  {project.images.length > 1 && (
+                    <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-emerald-400 border border-emerald-400/30">
+                      {project.images.length} images
+                    </div>
+                  )}
                 </div>
-                <p className="text-slate-300 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, i) => (
-                    <span 
-                      key={i}
-                      className="px-3 py-1 bg-slate-800 text-emerald-400 text-sm rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+
+                {/* Project Details */}
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-bold text-emerald-400">{project.title}</h3>
+                  </div>
+                  <p className="text-slate-300 mb-4 leading-relaxed">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, i) => (
+                      <span 
+                        key={i}
+                        className="px-3 py-1 bg-slate-800 text-emerald-400 text-sm rounded-full border border-slate-700 hover:border-emerald-400 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -320,16 +457,11 @@ export default function ProgrammerPortfolio() {
             <div className="flex items-start gap-4 mb-6">
               <Code2 className="w-6 h-6 text-emerald-400 mt-1" />
               <div>
-                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Information Technology - Major in Inforamtion Security</h3>
+                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Information Technology - Major in Information Security</h3>
                 <p className="text-emerald-400 mb-2">University of Southeastern Philippines</p>
                 <p className="text-slate-400">2019 - 2023</p>
               </div>
             </div>
-            {/* <ul className="list-disc list-inside space-y-2 text-slate-300 ml-10">
-              <li>Graduated with Honors</li>
-              <li>Focus on Software Engineering and Web Development</li>
-              <li>Relevant coursework: Data Structures, Algorithms, Database Systems, Web Technologies</li>
-            </ul> */}
           </div>
         </div>
       </section>
@@ -355,10 +487,6 @@ export default function ProgrammerPortfolio() {
                 <h3 className="text-lg font-bold text-emerald-400 mb-2">{cert.title}</h3>
                 <p className="text-slate-300 font-semibold mb-2">{cert.issuer}</p>
                 <p className="text-sm text-slate-400 mb-3">{cert.description}</p>
-                {/* <div className="flex items-center gap-2 text-xs text-slate-500">
-                  <span className="font-mono">ID:</span>
-                  <span className="font-mono">{cert.credentialId}</span>
-                </div> */}
               </div>
             ))}
           </div>
@@ -403,14 +531,90 @@ export default function ProgrammerPortfolio() {
           </div>
         </div>
       </section>
-      <br />
-      <br />
-      <br />
-      <br />
 
+      {/* Project Image Modal/Carousel */}
+      {selectedProject && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300"
+          onClick={closeProjectModal}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh] flex flex-col">
+            {/* Close Button */}
+            <button
+              onClick={closeProjectModal}
+              className="absolute -top-12 right-0 text-white hover:text-emerald-400 transition-colors z-10"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            {/* Project Title */}
+            <div className="text-center mb-4">
+              <h3 className="text-2xl font-bold text-emerald-400">{selectedProject.title}</h3>
+              <p className="text-slate-400 text-sm mt-1">
+                Image {currentImageIndex + 1} of {selectedProject.images.length}
+              </p>
+            </div>
+
+            {/* Image Container */}
+            <div 
+              className="relative bg-slate-900 rounded-lg overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedProject.images[currentImageIndex]}
+                alt={`${selectedProject.title} - Screenshot ${currentImageIndex + 1}`}
+                className="w-full h-auto max-h-[70vh] object-contain"
+              />
+
+              {/* Navigation Arrows - Only show if multiple images */}
+              {selectedProject.images.length > 1 && (
+                <>
+                  {/* Previous Button */}
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-emerald-500 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+
+                  {/* Next Button */}
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-emerald-500 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                </>
+              )}
+
+              {/* Image Indicators - Dots */}
+              {selectedProject.images.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                  {selectedProject.images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        idx === currentImageIndex 
+                          ? 'bg-emerald-400 w-8' 
+                          : 'bg-slate-500 hover:bg-slate-400'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Keyboard Hint */}
+            <div className="text-center mt-4 text-slate-400 text-sm">
+              Use arrow keys to navigate • ESC to close
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-slate-800">
+      <footer className="py-8 px-6 border-t border-slate-800 mt-20">
         <div className="max-w-4xl mx-auto text-center text-slate-400">
           <p className="mb-2">$ exit</p>
           <p>&copy; 2025 Roque Longgakit. Built with React & Tailwind CSS</p>

@@ -9,7 +9,25 @@ export default function ProgrammerPortfolio() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Get all sections
+      const sections = ['about', 'skills', 'experience', 'projects', 'education', 'certificates', 'contact'];
+      
+      // Find which section is currently in view
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // Check if section is in the middle of the viewport
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
+
+    handleScroll(); // Check on mount
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -17,7 +35,14 @@ export default function ProgrammerPortfolio() {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80; // Navigation height offset
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
       setActiveSection(sectionId);
       setIsMenuOpen(false);
     }
@@ -25,21 +50,15 @@ export default function ProgrammerPortfolio() {
 
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Full-stack web application with payment integration and inventory management",
-      tech: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "PEFCarbon Sink Database",
+      description: "Database management system for tracking carbon sink data.",
+      tech: ["PHP", "Laravel", "MySQL", "HTML/CSS"],
       link: "#"
     },
     {
-      title: "Task Management API",
-      description: "RESTful API with JWT authentication and real-time updates",
-      tech: ["Express", "PostgreSQL", "Socket.io", "Docker"],
-      link: "#"
-    },
-    {
-      title: "Data Visualization Dashboard",
-      description: "Interactive analytics dashboard with real-time data processing",
-      tech: ["Vue.js", "D3.js", "Python", "FastAPI"],
+      title: "Trigo: Tricycle Ride - Booking Mobile Application",
+      description: "Online booking platform for tricycle rides with real-time tracking.",
+      tech: ["Kotlin", "Firebase", "Google Cloud", "PHP", "MySQL", "HTML/CSS"],
       link: "#"
     }
   ];
@@ -47,7 +66,7 @@ export default function ProgrammerPortfolio() {
   const skills = [
     "JavaScript", "React", "Node.js", 
     "SQL", "Git", "PHP", "HTML/CSS",
-    "TypeScript"
+    "TypeScript", "Laravel"
   ];
 
   const supportSkills = [
@@ -87,9 +106,14 @@ export default function ProgrammerPortfolio() {
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
-                className={`hover:text-emerald-400 transition-colors ${activeSection === section ? 'text-emerald-400' : ''}`}
+                className={`relative hover:text-emerald-400 transition-all duration-300 ${
+                  activeSection === section ? 'text-emerald-400' : 'text-slate-300'
+                }`}
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
+                {activeSection === section && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 animate-pulse"></span>
+                )}
               </button>
             ))}
           </div>
@@ -124,11 +148,30 @@ export default function ProgrammerPortfolio() {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20">
         <div className="max-w-4xl text-center">
+          {/* Profile Picture */}
+          <div className="mb-8 flex justify-center">
+            <div className="relative group">
+              {/* Animated border effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+              
+              {/* Profile Image */}
+              <div className="relative">
+                <img 
+                  src="/profile-hero.png" 
+                  alt="Roque Longgakit - Profile"
+                  className="relative w-48 h-48 rounded-full object-cover border-4 border-slate-900 shadow-2xl"
+                />
+                {/* Online status indicator */}
+                <div className="absolute bottom-4 right-4 w-6 h-6 bg-emerald-400 rounded-full border-4 border-slate-900 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
           <div className="mb-6 text-emerald-400 text-sm animate-pulse">
             $ whoami
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-            Web Developer
+            Full Stack Developer
           </h1>
           <p className="text-xl md:text-2xl text-slate-400 mb-8">
             Building scalable web applications with clean code and modern technologies
@@ -157,16 +200,33 @@ export default function ProgrammerPortfolio() {
             <span className="text-slate-500">//</span> About Me
           </h2>
           <div className="bg-slate-900 border border-slate-800 rounded-lg p-8">
-            <p className="text-lg text-slate-300 leading-relaxed mb-4">
-              I'm an enthusiastic coder that enjoys creating sophisticated solutions for 
-              challenging issues. I have a solid background in information technology 
-              and practical development experience, and my area of expertise 
-              is creating scalable, reliable apps.
-            </p>
-            <p className="text-lg text-slate-300 leading-relaxed">
-              I like to explore new technologies, contribute to open-source projects, and 
-              share my expertise with the developer community when I'm not developing.
-            </p>
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {/* Profile Image for About Section */}
+              <div className="flex-shrink-0 mx-auto md:mx-0">
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-lg blur opacity-25"></div>
+                  <img 
+                    src="/profile-about.jpg" 
+                    alt="Roque Longgakit"
+                    className="relative w-32 h-32 rounded-lg object-cover border-2 border-slate-800"
+                  />
+                </div>
+              </div>
+              
+              {/* About Text */}
+              <div className="flex-1">
+                <p className="text-lg text-slate-300 leading-relaxed mb-4">
+                  I'm an enthusiastic coder that enjoys creating sophisticated solutions for 
+                  challenging issues. I have a solid background in information technology 
+                  and practical development experience, and my area of expertise 
+                  is creating scalable, reliable apps.
+                </p>
+                <p className="text-lg text-slate-300 leading-relaxed">
+                  I like to explore new technologies, contribute to open-source projects, and 
+                  share my expertise with the developer community when I'm not developing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -239,7 +299,7 @@ export default function ProgrammerPortfolio() {
                   <h3 className="text-xl font-bold text-emerald-400 mb-2">Technical Support Specialist</h3>
                   <p className="text-slate-300">Decoart Marketing Incorporated - Citihardware</p>
                 </div>
-                <span className="text-slate-400 text-sm mt-2 md:mt-0">April 2024 - July 2025</span>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">April 2024 - July 2024</span>
               </div>
               <ul className="list-disc list-inside space-y-2 text-slate-300">
                 <li>Provided technical support for web applications and software products</li>
@@ -247,6 +307,20 @@ export default function ProgrammerPortfolio() {
                 <li>Documented technical issues and created knowledge base articles</li>
                 <li>Collaborated with development team to identify and fix bugs</li>
                 <li>Maintained 95% customer satisfaction rating</li>
+              </ul>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 hover:border-emerald-400 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Visym Collector Dataset AI - Freelance</h3>
+                  <p className="text-slate-300">US</p>
+                </div>
+                <span className="text-slate-400 text-sm mt-2 md:mt-0">August 2021 - Nov 2023</span>
+              </div>
+              <ul className="list-disc list-inside space-y-2 text-slate-300">
+                <li>On-demand Datasets for Visual AI</li>
+                <li>Visym Labs mission is to develop a global platform consented and privacy preserving computer vision</li>
               </ul>
             </div>
           </div>
@@ -267,7 +341,6 @@ export default function ProgrammerPortfolio() {
               >
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-bold text-emerald-400">{project.title}</h3>
-                  <ExternalLink className="w-5 h-5 text-slate-400 hover:text-emerald-400 cursor-pointer" />
                 </div>
                 <p className="text-slate-300 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
@@ -296,15 +369,11 @@ export default function ProgrammerPortfolio() {
             <div className="flex items-start gap-4 mb-6">
               <Code2 className="w-6 h-6 text-emerald-400 mt-1" />
               <div>
-                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Information Technology - Major in Inforamtion Security</h3>
+                <h3 className="text-xl font-bold mb-2">Bachelor of Science in Information Technology - Major in Information Security</h3>
                 <p className="text-emerald-400 mb-2">University of Southeastern Philippines</p>
                 <p className="text-slate-400">2019 - 2023</p>
               </div>
             </div>
-            {/* <ul className="list-disc list-inside space-y-2 text-slate-300 ml-10">
-              <li>Focus on Software Engineering and Web Development</li>
-              <li>Relevant coursework: Data Structures, Algorithms, Database Systems, Web Technologies</li>
-            </ul> */}
           </div>
         </div>
       </section>
@@ -330,10 +399,6 @@ export default function ProgrammerPortfolio() {
                 <h3 className="text-lg font-bold text-emerald-400 mb-2">{cert.title}</h3>
                 <p className="text-slate-300 font-semibold mb-2">{cert.issuer}</p>
                 <p className="text-sm text-slate-400 mb-3">{cert.description}</p>
-                {/* <div className="flex items-center gap-2 text-xs text-slate-500">
-                  <span className="font-mono">ID:</span>
-                  <span className="font-mono">{cert.credentialId}</span>
-                </div> */}
               </div>
             ))}
           </div>
@@ -380,10 +445,10 @@ export default function ProgrammerPortfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-slate-800">
+      <footer className="py-8 px-6 border-t border-slate-800 mt-20">
         <div className="max-w-4xl mx-auto text-center text-slate-400">
           <p className="mb-2">$ exit</p>
-          <p>&copy; 2025 Your Name. Built with React & Tailwind CSS</p>
+          <p>&copy; 2025 Roque Longgakit. Built with React & Tailwind CSS</p>
         </div>
       </footer>
     </div>
